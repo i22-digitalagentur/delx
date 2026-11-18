@@ -1,5 +1,10 @@
 # Delx
 
+> [!WARNING]
+> **This library is deprecated and no longer maintained.**
+> It will not receive updates, bug fixes or support for newer Elixir versions.
+> See [Migrating away from Delx](#migrating-away-from-delx) below.
+
 [![Build Status](https://travis-ci.org/tlux/delx.svg?branch=master)](https://travis-ci.org/tlux/delx)
 [![Coverage Status](https://coveralls.io/repos/github/tlux/delx/badge.svg?branch=master)](https://coveralls.io/github/tlux/delx?branch=master)
 [![Hex.pm](https://img.shields.io/hexpm/v/delx.svg)](https://hex.pm/packages/delx)
@@ -168,3 +173,17 @@ Please change it to:
 ```elixir
 config :greeter, Delx, mock: true
 ```
+
+## Migrating away from Delx
+
+Delx is a thin layer on top of `Kernel.defdelegate/2`, so migrating away is
+straightforward:
+
+1. Remove `use Delx, otp_app: ...` from your modules. The existing
+   `defdelegate/2` calls then fall back to `Kernel.defdelegate/2` and keep
+   working unchanged.
+2. Remove `config :my_app, Delx, ...` from your config files.
+3. Replace `Delx.TestAssertions.assert_delegate/2` in your tests. Elixir stores
+   the delegation target of every `defdelegate` in the `:delegate_to` doc
+   metadata, which you can read with `Code.fetch_docs/1` to assert on it.
+4. Remove `:delx` from your dependencies.

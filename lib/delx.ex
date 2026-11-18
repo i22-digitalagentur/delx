@@ -2,6 +2,12 @@ defmodule Delx do
   @moduledoc """
   An Elixir library to make function delegation testable.
 
+  > #### Deprecated {: .warning}
+  >
+  > This library is deprecated and no longer maintained. Use
+  > `Kernel.defdelegate/2` directly instead; see the README for migration
+  > steps.
+
   ## Usage
 
   Let's say you have the following module.
